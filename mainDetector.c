@@ -11,6 +11,7 @@ void loop(){
     PORTB |= (1 << PORTB2);
     _delay_ms(1000);
     PORTB &= ~(1 << PORTB2);
+    _delay_ms(1000);
 }
 
 void main(void) {

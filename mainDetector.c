@@ -1,19 +1,16 @@
-/*
- * File:   mainDetector.c
- * Author: ASUS
- *
- * Created on 15 ??????? 2568, 14:34 ?.
- */
-
-
+#define F_CPU 8000000UL
 #include <xc.h>
+#include <avr/io.h>
+#include <util/delay.h>
 
 void setup(){
-    
+    DDRB |= (1 << DDD2);
 }
 
 void loop(){
-    
+    PORTB |= (1 << PORTB2);
+    _delay_ms(1000);
+    PORTB &= ~(1 << PORTB2);
 }
 
 void main(void) {

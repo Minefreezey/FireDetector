@@ -3,24 +3,46 @@
 #include <stdio.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
 #include "myLCD.h"
 #include "myTemperature.h"
 #include "myUtil.h"
+#include "mySmoke.h"
+#include "myBuzzer.h"
+
 
 char bufferTemp[20];
-char bufferADC[20];
+char bufferSPI[20];
 void setup(){
     cls();
     initLCD();
+    _delay_ms(20);
+    setupPWM();
+    _delay_ms(20);
+    initADC();
+    _delay_ms(20);
     initSPI();
-    DDRB |= (1 << DDD2);
+    
+    
     LCDDisplayString("Project");
     _delay_ms(1000);
     cls();
     _delay_ms(100);
+    sei();
 }
 
 void loop(){
+    startADC();
+    _delay_ms(150);
+//    startPWM();
+
+    if (alert) {
+      cls();
+      LCDDisplayString("ALERT!!");
+      startPWM();  // Enable buzzer
+    } else {
+      stopPWM();   // Disable buzzer
+    }
     PORTB &= ~(1 << PORTB2);
 
     SPDR = 0;
@@ -35,17 +57,16 @@ void loop(){
     }
 
     uint8_t lowByte = SPDR;
-    myitoa(lowByte, bufferTemp);
     SPSR |= (1 << SPIF); //Clear the complete flag.
     
     PORTB |= (1 << PORTB2);
     
-    uint16_t adcValue = (((highByte & 0x1F) << 8) | lowByte)>> 1;
-    float temperature = (((adcValue /4095.0) * 5.0) - 0.5) * 100;
-   
-    myitoa(adcValue, bufferADC);
-    LCDDisplayString("ADC = ");
-    LCDDisplayString(bufferADC);
+    uint16_t spiValue = (((highByte & 0x1F) << 8) | lowByte)>> 1;
+    float temperature = (((spiValue /4095.0) * 5.0) - 0.5) * 100;
+  
+    myitoa(spiValue, bufferSPI);
+    LCDDisplayString("SPI:");
+    LCDDisplayString(bufferSPI);
     sendLCDCommand(0xc0);
     sprintf(bufferTemp, "Temp = %.3f", temperature);
     LCDDisplayString(bufferTemp);
@@ -53,6 +74,7 @@ void loop(){
     _delay_ms(200);
     cls();
     _delay_ms(8);
+    
 }
 
 void main(void) {

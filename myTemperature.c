@@ -1,11 +1,3 @@
-/*
- * File:   myTemperature.c
- * Author: ASUS
- *
- * Created on 17 ??????? 2568, 0:57 ?.
- */
-
-
 #include <xc.h>
 #include "myTemperature.h"
 #include <avr/io.h>

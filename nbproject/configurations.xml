@@ -7,6 +7,8 @@
       <itemPath>myLCD.h</itemPath>
       <itemPath>myTemperature.h</itemPath>
       <itemPath>myUtil.h</itemPath>
+      <itemPath>mySmoke.h</itemPath>
+      <itemPath>myBuzzer.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -19,6 +21,8 @@
       <itemPath>myLCD.c</itemPath>
       <itemPath>myTemperature.c</itemPath>
       <itemPath>myUtil.c</itemPath>
+      <itemPath>mySmoke.c</itemPath>
+      <itemPath>myBuzzer.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

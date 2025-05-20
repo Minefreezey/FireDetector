@@ -33,9 +33,9 @@ void setup(){
 
 void loop(){
     startADC();
+    DDRD |= (1 << DDD3);
+    startPWM();
     _delay_ms(150);
-//    startPWM();
-
     if (alert) {
       cls();
       LCDDisplayString("ALERT!!");
@@ -44,6 +44,22 @@ void loop(){
       stopPWM();   // Disable buzzer
     }
     PORTB &= ~(1 << PORTB2);
+    
+    DDRB |= (1 << DDB0);
+    if(PIND & (1 << PIND0)){
+        cls();
+        LCDDisplayString("FIRE!");
+        _delay_ms(100);
+        DDRD |= (1 << DDD3);
+        startPWM();
+        
+        PORTB |= (1 << PORTB0);
+    }
+    else{
+        DDRD &= ~(1 << DDD3);
+        PORTB &= ~(1 << PORTB0);
+        stopPWM();
+    }
 
     SPDR = 0;
     while (!(SPSR & (1 << SPIF))){

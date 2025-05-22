@@ -32,7 +32,7 @@ void sendLCDData(uint8_t data){
 
 void LCDDisplayString(const char* str){  
     while(*str){
-        _delay_ms(2);
+        _delay_ms(5);
         sendLCDData(*str++);
     }
 }

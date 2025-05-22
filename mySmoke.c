@@ -16,12 +16,12 @@ ISR(ADC_vect){
     LCDDisplayString("ADC:");
     LCDDisplayString(bufferADC);
     _delay_ms(200);
-    if (adcResult > 130){
-        DDRD |= (1 << DDD3);
+    if (adcResult > 270){
+//        DDRD |= (1 << DDD3);
         alert = 1;
     }
     else{
-        DDRD &= ~(1 << DDD3);
+//        DDRD &= ~(1 << DDD3);
         alert = 0;
     }
 }

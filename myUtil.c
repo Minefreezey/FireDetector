@@ -1,11 +1,3 @@
-/*
- * File:   myUtil.c
- * Author: ASUS
- *
- * Created on 17 ??????? 2568, 1:10 ?.
- */
-
-
 #include <xc.h>
 #include "myUtil.h"
 
